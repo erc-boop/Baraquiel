@@ -93,6 +93,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "final-cc105:build:production",
+              "serveTarget": "final-cc105:serve:production"
+            },
+            "development": {
+              "buildTarget": "final-cc105:build:development",
+              "serveTarget": "final-cc105:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
