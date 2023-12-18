@@ -1,39 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
-  registerEmail: string | undefined;
-  registerPassword: string | undefined;
+export class RegisterComponent {
+  registerForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit() {
-    this.authService.getAuthState().subscribe((user: any) => {
-      if (user) {
-        this.router.navigate(['/add-account']);
-      }
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      registerEmail: ['', [Validators.required, Validators.email]],
+      registerPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   register() {
-    if (this.registerEmail && this.registerPassword) {
-      this.authService.register(this.registerEmail, this.registerPassword)
-        .then((result: any) => {
-          console.log('User registered');
-          console.log(result); // This will log the result of the registration
-          window.alert('Registered successfully'); // This will display the alert
-          this.registerEmail = '';
-          this.registerPassword = '';
-          this.router.navigate(['/login']); // navigate to add account page
-        }).catch((error: any) => {
-          console.error(error);
-        });
-    }
+    // Your registration logic here
+    console.log(this.registerForm.value);
   }
 }
